@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PropNest - Real Estate Buyer Portal
 
-## Getting Started
+A sleek, intuitive buyer portal for a real estate agency, focused on user privacy and property curation. Built tightly integrated using React + Redux on the frontend and NestJS matching backend.
 
-First, run the development server:
+## Tech Stack
+-   **Frontend:** React (Vite), Tailwind CSS, Redux Toolkit (RTK Query), React Router v6, React Hot Toast
+-   **Backend:** NestJS, TypeScript, MongoDB (Mongoose), JWT Security
+-   **Icons & styling:** lucide-react, Google Inter Fonts, Glassmorphism elements
 
+## Features
+-   Secure JWT-based authentication
+-   User registration and personalized login functionality
+-   Full dashboard to view user status and properties
+-   Adding, managing, and securely deleting favourite properties
+-   "My Favourites" are strictly scoped to the currently authenticated user
+
+---
+
+## 🚀 Running the App Locally
+
+### 1. Start the Backend
+Navigate to your backend directory:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cd backend/backend
+npm install
+# Make sure your .env has MONGO_URI setup and JWT_SECRET
+npm run start:dev
 ```
+The backend starts on **http://localhost:3001** and allows CORS from `http://localhost:3000` (or your frontend url).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Start the Frontend
+In a separate terminal, navigate to the frontend folder:
+```bash
+cd frontend
+npm install
+npm run dev
+```
+The application will be running locally (usually port `5173` or `3000`).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 💡 Example Flow
+1.  **Welcome / Register:** Navigate to the `/register` route. Input your `First Name`, `Last Name`, `Email`, and `Password`. This persists to the MongoDB users collection.
+2.  **Login:** Head to `/login` to sign in. Once authorized, a JWT token is created by NestJS, and your local Redux Store saves the user instance safely.
+3.  **Dashboard:** Access the `/dashboard`. You will see your name dynamically fetched. It will initially show "No favourites."
+4.  **Save properties:** Click on `Add Property`. A sleek modal pops up. Enter dummy property info, hit "Save." RTK Query instantly adds this to Mongo and elegantly updates the UI via cache invalidation.
+5.  **Remove properties:** Click the *Trash* icon on any property card to cleanly delete it. The UI feels instant thanks to optimized RTK slice invalidation.
