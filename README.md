@@ -35,11 +35,11 @@ The application will be running locally (`3000`).
 ---
 
 ## Example Flow
-1.  **Welcome / Register:** Navigate to the `/register` route. Input your `First Name`, `Last Name`, `Email`, and `Password`. Currently there is  two roles (Buyer and Seller). We can add other roles in future.
+1.  **Welcome / Register:** Navigate to the `/register` route. Input your `First Name`, `Last Name`, `Email`, and `Password`. Currently there is  two roles (Buyer and Seller).Buyer can only favourite bookmark the property. Where as the seller can do all the crud operations.
 2.  **Login:** Head to `/login` to sign in. It redirects to `/`.
 3.  **Dashboard:** Access the `/profile`. You will see your name dynamically fetched. You will see 3 tabs:All Properties,my Properties, and My favourites.
   All Properties:Shows all the existing properties.
-  My Properties:Shows all the properties added by the user. Where we can delete and edit the properties.
+  My Properties:Shows all the properties added by the user. Where we can delete and edit the properties(Only Seller).
   My Favourites:Shows all the properties marked as favourite.
 4.  **Create properties:** Click on `Add Property`. A modal pops up. Enter dummy property info, hit "Create Property". We can create the property in my properties tab.
 5.  **Remove properties:** Click the *Trash* icon on any property card to cleanly delete it. The UI feels instant thanks to optimized RTK slice invalidation.
