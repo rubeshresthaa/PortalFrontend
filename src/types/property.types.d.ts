@@ -1,11 +1,11 @@
-export interface MyProperitiesResponse{
+interface MyProperitiesResponse{
   success: boolean;
   message: string;
   data: Property[];
   statusCode: number;
 }
 
-export interface Property {
+interface Property {
   _id: string;
   userId: string;
 

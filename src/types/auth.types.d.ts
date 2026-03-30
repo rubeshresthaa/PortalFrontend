@@ -24,6 +24,7 @@ interface AuthUser{
   password:string,
   firstName:string,
   lastName:string,
+  role?: 'buyer' | 'seller'
 }
 
 interface RegisterResponse{
@@ -51,8 +52,8 @@ interface CurrentUserResponse{
   data: {
     _id:string;
     email:string;
-    firstName:string;
-    lastName:string;
+    firstName:string,
+    lastName:string,
     role:string;
   };
   statusCode: number;

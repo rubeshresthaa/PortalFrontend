@@ -7,6 +7,9 @@ export default function Navbar() {
   const { user, isAuthenticated: isAuth } = useAuth();
   const [logout] = useLogoutMutation();
 
+  console.log("User:", user);
+  console.log("Is Auth:", isAuth);
+
   const handleLogout = async () => {
     try {
       await logout().unwrap();

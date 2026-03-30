@@ -25,7 +25,7 @@ export default function Login() {
     <div className="min-h-[calc(100vh-64px)] flex items-center justify-center bg-slate-50 p-4">
       <div className="w-full max-w-md">
         {/* Card */}
-        <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 p-8 sm:p-10">
+        <div className="bg-white rounded-3xl shadow-slate-200/60 border border-gray-200 p-8 sm:p-10">
           {/* Header */}
           <div className="flex flex-col items-center mb-8">
             <div className="w-14 h-14 bg-gradient-to-br from-indigo-600 to-blue-500 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-indigo-200">
