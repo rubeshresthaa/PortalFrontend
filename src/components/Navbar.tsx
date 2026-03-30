@@ -1,23 +1,21 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  selectCurrentUser,
-  selectIsAuthenticated,
-  logout,
-} from "../store/slices/authSlice";
-import toast from "react-hot-toast";
-import { RootState } from "../store/store";
+import { useLogoutMutation } from "../store/api/authApi";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Navbar() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const user = useSelector((state: RootState) => selectCurrentUser(state));
-  const isAuthenticated = useSelector((state: RootState) => selectIsAuthenticated(state));
+  const router = useNavigate();
+  const { user, isAuthenticated: isAuth } = useAuth();
+  const [logout] = useLogoutMutation();
 
-  const handleLogout = () => {
-    dispatch(logout());
-    toast.success("Logged out successfully");
-    navigate("/");
+  const handleLogout = async () => {
+    try {
+      await logout().unwrap();
+    } catch (error) {
+      console.error("Logout failed:", error);
+    } finally {
+      // Always redirect
+      router("/");
+    }
   };
 
   return (
@@ -27,13 +25,13 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
             <span className="text-2xl font-black text-indigo-600 tracking-tight">
-              Task<span className="text-slate-800">Hub</span>
+              Real<span className="text-slate-800">Estate</span>
             </span>
           </Link>
 
           {/* Nav right */}
           <div className="flex items-center gap-4">
-            {isAuthenticated ? (
+            {isAuth ? (
               <>
                 {/* User info */}
                 <div className="hidden sm:flex flex-col items-end">
@@ -46,10 +44,10 @@ export default function Navbar() {
                 </div>
 
                 <Link
-                  to="/dashboard"
-                  className="text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-colors hidden sm:block"
+                  to="/profile"
+                  className="text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-colors "
                 >
-                  My Favourites
+                  Profile
                 </Link>
 
                 <button

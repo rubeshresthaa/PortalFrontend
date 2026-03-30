@@ -1,36 +1,23 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useLoginMutation } from '../store/api/authApi';
-import { useDispatch } from 'react-redux';
-import { setCredentials } from '../store/slices/authSlice';
-import toast from 'react-hot-toast';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useLoginMutation } from "../store/api/authApi";
+import toast from "react-hot-toast";
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const [login, { isLoading }] = useLoginMutation();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await login({ email, password }).unwrap();
-      const token = res.data.access_token;
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      const userData = {
-        email: res.data.email,
-        role: payload.role,
-        id: payload.sub,
-        firstName: payload.firstName || 'User',
-        lastName: payload.lastName || ''
-      };
-      dispatch(setCredentials({ token, user: userData }));
-      toast.success('Welcome back!');
-      navigate('/dashboard');
-    } catch (err: any) {
-      toast.error(err?.data?.message || 'Login failed. Invalid credentials.');
+      await login({ email: email.toLowerCase(), password }).unwrap();
+      toast.success("Welcome back!");
+      navigate("/dashboard");
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Login failed");
     }
   };
 
@@ -44,8 +31,12 @@ export default function Login() {
             <div className="w-14 h-14 bg-gradient-to-br from-indigo-600 to-blue-500 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-indigo-200">
               <span className="text-white font-black text-xl">P</span>
             </div>
-            <h2 className="text-2xl font-extrabold text-slate-800 mb-1">Welcome Back</h2>
-            <p className="text-slate-500 text-sm text-center">Sign in to manage your favourite properties</p>
+            <h2 className="text-2xl font-extrabold text-slate-800 mb-1">
+              Welcome Back
+            </h2>
+            <p className="text-slate-500 text-sm text-center">
+              Sign in to manage your favourite properties
+            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -85,14 +76,17 @@ export default function Login() {
               {isLoading ? (
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               ) : (
-                'Sign In'
+                "Sign In"
               )}
             </button>
           </form>
 
           <div className="mt-6 text-center text-sm text-slate-500 border-t border-slate-100 pt-6">
-            Don't have an account?{' '}
-            <Link to="/register" className="text-indigo-600 font-semibold hover:text-indigo-800 transition-colors">
+            Don't have an account?{" "}
+            <Link
+              to="/register"
+              className="text-indigo-600 font-semibold hover:text-indigo-800 transition-colors"
+            >
               Register here
             </Link>
           </div>

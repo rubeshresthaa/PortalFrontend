@@ -19,7 +19,7 @@ export default function App() {
             
             {/* Protected routes */}
             <Route element={<ProtectedRoute />}>
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/profile" element={<Dashboard />} />
             </Route>
 
             {/* Default redirect to public dashboard */}

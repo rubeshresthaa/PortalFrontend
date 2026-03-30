@@ -1,11 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { logout } from '../slices/authSlice';
-import { RootState } from '../store';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_BASE_URL,
-  prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as RootState).auth.token;
+  prepareHeaders: (headers) => {
+    const token = localStorage.getItem('access_token');
     if (token) {
       headers.set('authorization', `Bearer ${token}`);
     }
@@ -14,10 +12,11 @@ const baseQuery = fetchBaseQuery({
 });
 
 const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
-  let result = await baseQuery(args, api, extraOptions);
-  
+  const result = await baseQuery(args, api, extraOptions);
   if (result.error && result.error.status === 401) {
-    api.dispatch(logout());
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('user');
+    window.location.href = '/';
   }
   return result;
 };
@@ -25,6 +24,6 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
 export const baseApi = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithReauth,
-  tagTypes: ['Favourite'],
+  tagTypes: ['Favourite', 'Property', 'User', 'MyProperties'],
   endpoints: () => ({}),
 });
