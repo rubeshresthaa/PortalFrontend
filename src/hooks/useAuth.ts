@@ -4,7 +4,6 @@ import { skipToken } from '@reduxjs/toolkit/query';
 export function useAuth() {
   const token = localStorage.getItem('access_token');
   
-  // Only fetch current user if token exists
   const { data: currentUser, isLoading, error } = useGetCurrentUserQuery(
     token ? undefined : skipToken
   );

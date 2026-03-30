@@ -35,7 +35,7 @@ The application will be running locally (`3000`).
 ---
 
 ## Example Flow
-1.  **Welcome / Register:** Navigate to the `/register` route. Input your `First Name`, `Last Name`, `Email`, and `Password`. Currently there is only One role (Buyer). We can add other roles in future.
+1.  **Welcome / Register:** Navigate to the `/register` route. Input your `First Name`, `Last Name`, `Email`, and `Password`. Currently there is  two roles (Buyer and Seller). We can add other roles in future.
 2.  **Login:** Head to `/login` to sign in. It redirects to `/`.
 3.  **Dashboard:** Access the `/profile`. You will see your name dynamically fetched. You will see 3 tabs:All Properties,my Properties, and My favourites.
   All Properties:Shows all the existing properties.
@@ -45,3 +45,4 @@ The application will be running locally (`3000`).
 5.  **Remove properties:** Click the *Trash* icon on any property card to cleanly delete it. The UI feels instant thanks to optimized RTK slice invalidation.
 6.  **Mark as favourite:** Click the *Bookmark* icon on any property card to mark it as favourite.
 7.**Edit properties:** Click the *Edit* icon on any property card to edit it.
+

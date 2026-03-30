@@ -4,6 +4,7 @@ import { Property } from "../types/property.types.d";
 interface DashboardPropertyCardProps {
   property: Property;
   variant: "properties" | "my-properties" | "favourites";
+  userRole?: string;
   onEdit?: (property: Property) => void;
   onDelete?: (propertyId: string) => void;
   onRemoveFavourite?: (propertyId: string) => void;
@@ -12,11 +13,12 @@ interface DashboardPropertyCardProps {
 export default function DashboardPropertyCard({
   property,
   variant,
+  userRole,
   onEdit,
   onDelete,
   onRemoveFavourite,
 }: DashboardPropertyCardProps) {
-  const showActions = variant === "my-properties";
+  const showActions = variant === "my-properties" && userRole === "seller";
   const showRemoveFavourite = variant === "favourites";
 
   return (

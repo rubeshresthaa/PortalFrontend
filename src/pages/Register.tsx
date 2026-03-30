@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useRegisterMutation } from '../store/api/authApi';
-import toast from 'react-hot-toast';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useRegisterMutation } from "../store/api/authApi";
+import toast from "react-hot-toast";
+import RoleSelector from "../components/RoleSelector";
 
 export default function Register() {
-  const [form, setForm] = useState({ firstName: '', lastName: '', email: '', password: '' });
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    role: "" as "buyer" | "seller",
+  });
   const [register, { isLoading }] = useRegisterMutation();
   const navigate = useNavigate();
 
@@ -12,10 +19,12 @@ export default function Register() {
     e.preventDefault();
     try {
       await register(form).unwrap();
-      toast.success('Registration successful! Please sign in.');
-      navigate('/login');
+      toast.success("Registration successful! Please sign in.");
+      navigate("/login");
     } catch (err: any) {
-      toast.error(err?.data?.message || 'Registration failed. Please try again.');
+      toast.error(
+        err?.data?.message || "Registration failed. Please try again.",
+      );
     }
   };
 
@@ -26,14 +35,18 @@ export default function Register() {
     <div className="min-h-[calc(100vh-64px)] flex items-center justify-center bg-slate-50 p-4">
       <div className="w-full max-w-md">
         {/* Card */}
-        <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 p-8 sm:p-10">
-          {/* Header */}
+        <div className="bg-white rounded-3xl border border-gray-200 p-8 sm:p-10">
+          {/* Header */}  
           <div className="flex flex-col items-center mb-8">
             <div className="w-14 h-14 bg-gradient-to-br from-indigo-600 to-cyan-500 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-indigo-200">
               <span className="text-white font-black text-xl">P</span>
             </div>
-            <h2 className="text-2xl font-extrabold text-slate-800 mb-1">Create Account</h2>
-            <p className="text-slate-500 text-sm text-center">Join PropPortal to save and manage properties</p>
+            <h2 className="text-2xl font-extrabold text-slate-800 mb-1">
+              Create Account
+            </h2>
+            <p className="text-slate-500 text-sm text-center">
+              Join PropPortal to save and manage properties
+            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -69,6 +82,11 @@ export default function Register() {
               </div>
             </div>
 
+            <RoleSelector
+              value={form.role}
+              onChange={(role) => setForm({ ...form, role })}
+            />
+
             <div>
               <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
                 Email Address
@@ -98,7 +116,9 @@ export default function Register() {
                 required
                 minLength={6}
               />
-              <p className="text-xs text-slate-400 mt-1.5 ml-1">Minimum 6 characters</p>
+              <p className="text-xs text-slate-400 mt-1.5 ml-1">
+                Minimum 6 characters
+              </p>
             </div>
 
             <button
@@ -109,15 +129,18 @@ export default function Register() {
               {isLoading ? (
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               ) : (
-                'Create Account'
+                "Create Account"
               )}
             </button>
           </form>
 
           <div className="mt-6 text-center text-sm text-slate-500 border-t border-slate-100 pt-6">
-            Already have an account?{' '}
-            <Link to="/login" className="text-indigo-600 font-semibold hover:text-indigo-800 transition-colors">
-              Sign in instead
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="text-indigo-600 font-semibold hover:text-indigo-800 transition-colors"
+            >
+              Sign in
             </Link>
           </div>
         </div>
